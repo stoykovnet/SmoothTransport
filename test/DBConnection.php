@@ -57,3 +57,8 @@ echo '</p>';
  */
 echo '<p> Deleted rows: ' . $db->delete('truck', $lastInsertedId) . '</p>';
 echo '<p> Deleted rows: ' . $db->delete('truck', $lastInsertedId + 1) . '</p>';
+
+/*
+ * GET TABLE COLUMNS NAMES TEST.
+ */
+var_dump($db->get_table_columns_names('truck'));

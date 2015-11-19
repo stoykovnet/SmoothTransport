@@ -1,0 +1,7 @@
+da razdelim arhitekturata ot API-to (koeto e INterface)
+SMS ? kakwo e? message queue? za exama shte trqbwa
+
+
+how we designed the REST API-to
+which maturity level
+which maturity level is ClickSend.com, is it easy to integrate

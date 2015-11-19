@@ -1,0 +1,8 @@
+[2015-11-19 02:28:18]: SQLSTATE[08004] [1040] Too many connections @246 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-19 02:28:18]: SQLSTATE[08004] [1040] Too many connections @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-19 02:23:26]: SQLSTATE[08004] [1040] Too many connections @246 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-19 02:23:26]: SQLSTATE[08004] [1040] Too many connections @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-19 02:22:41]: SQLSTATE[08004] [1040] Too many connections @246 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-19 02:22:41]: SQLSTATE[08004] [1040] Too many connections @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-11-18 14:01:02]: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection

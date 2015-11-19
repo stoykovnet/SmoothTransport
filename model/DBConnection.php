@@ -228,6 +228,7 @@ class DBConnection {
     /*
      * Delete a row by id in a specified table.
      */
+
     public function delete($table, $id) {
         $db = $this->get_db_connection();
         try {
@@ -235,6 +236,19 @@ class DBConnection {
             $stmt->execute(array(':id' => $id));
 
             return $stmt->rowCount();
+        } catch (Exception $ex) {
+            $db->write_to_log($ex->getMessage());
+            return false;
+        }
+    }
+
+    public function get_table_columns_names($table) {
+        $db = $this->get_db_connection();
+        try {
+            $stmt = $db->prepare('DESCRIBE ' . $this->get_table_prefix() . $table);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (Exception $ex) {
             $db->write_to_log($ex->getMessage());
             return false;
