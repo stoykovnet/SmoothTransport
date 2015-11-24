@@ -1,7 +1,7 @@
 <?php
 
-require_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . 'smoothTransport/model/ModelTemplate.php';
-require_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . 'smoothTransport/model/DBConnection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . 'smoothTransport/model/ModelTemplate.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . 'smoothTransport/model/DBConnection.php';
 
 $truck = new ModelTemplate('Truck');
 /*
