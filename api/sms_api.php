@@ -1,6 +1,7 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/api/api.php';
+require_once constant('ROOT') . 'api/api.php';
+require_once constant('ROOT') . 'model/ModelTemplate.php';
 
 class sms_api extends API {
 
@@ -10,6 +11,7 @@ class sms_api extends API {
     public function __construct($request, $origin) {
         parent::__construct($request);
         $this->origin = $origin;
+        $this->log_received_data();
     }
 
     protected function sms() {
@@ -17,22 +19,20 @@ class sms_api extends API {
             case 'GET':
                 return 'Nikola e kaval';
             case 'POST':
-                return $this->log_sent_data();
+                return $this->process_post();
             default:
                 return 'No such method for ' . __FUNCTION__;
         }
     }
 
-    private function log_sent_data() {
-        $file = '';
-        if (file_exists('../debug/sms_api_post.txt')) {
-            $file = file_get_contents('../debug/sms_api_post.txt');
-        }
-        file_put_contents('../debug/sms_api_post.txt', '[' . date('Y-m-d H:i:s') . ']: '
-                . " Received data from $this->origin "
-                . $this->file . "\r\n"
-                . $file);
-        return "Got $this->file";
+    private function process_post() {
+        $data = array();
+        parse_str($this->file, $data);
+
+        $td = new ModelTemplate('TruckDriver');
+        
+
+        return 1;
     }
 
 }

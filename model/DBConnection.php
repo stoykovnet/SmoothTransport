@@ -43,7 +43,7 @@ class DBConnection {
      */
 
     private function write_to_log($entry) {
-        $logPath = '../debug/db_error_log.txt';
+        $logPath = '../_bin/debug/db_error_log.txt';
         $dbg = debug_backtrace();
         if (file_exists($logPath)) {
             $file = file_get_contents($logPath);

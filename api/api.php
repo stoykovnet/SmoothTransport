@@ -120,6 +120,8 @@ abstract class API {
     public function route_request() {
         if (method_exists($this, $this->endpoint)) {
             return $this->get_the_response($this->{$this->endpoint}($this->arguments));
+        } elseif ($this->endpoint === '') {
+            return $this->get_the_response('No endpoint specified.', 404);
         } else {
             return $this->get_the_response('There is no endpoint called: '
                             . $this->endpoint, 404);
@@ -170,6 +172,20 @@ abstract class API {
         );
 
         return ($status[$code]) ? $status[$code] : $status[500];
+    }
+
+    
+    protected function log_received_data() {
+        $log = '';
+        $logPath = '../_bin/debug/api_requests_log.txt';
+        if (file_exists($logPath)) {
+            $log = file_get_contents($logPath);
+        }
+        file_put_contents($logPath, '[' . date('Y-m-d H:i:s') . ']: '
+                . "[$this->method]"
+                . " From $this->origin "
+                . $this->file . "\r\n"
+                . $log);
     }
 
 }
