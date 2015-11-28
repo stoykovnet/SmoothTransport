@@ -18,11 +18,11 @@ echo '<p> Last Inserted ID: ' . $lastInsertedId . '</p>';
  * SELECT SINGLE TEST.
  */
 echo '<p> All columns: ';
-var_dump($db->select('truck', '*', $lastInsertedId));
+var_dump($db->select('truck', '*', 'id', $lastInsertedId));
 echo '</p>';
 
 echo '<p> Some columns: ';
-var_dump($db->select('truck', array('brand', 'age'), $lastInsertedId));
+var_dump($db->select('truck', array('brand', 'age'), 'id', $lastInsertedId));
 echo '</p>';
 
 /*
@@ -39,7 +39,7 @@ var_dump($db->select('truck', '*'));
  * UPDATE TEST.
  */
 echo '<p> Before update: ';
-var_dump($db->select('truck', '*', $lastInsertedId));
+var_dump($db->select('truck', '*', 'id', $lastInsertedId));
 echo '</p>';
 
 $db->update('truck', array(
@@ -49,7 +49,7 @@ $db->update('truck', array(
 ), $lastInsertedId);
 
 echo '<p> After update: ';
-var_dump($db->select('truck', '*', $lastInsertedId));
+var_dump($db->select('truck', '*', 'id',$lastInsertedId));
 echo '</p>';
 
 /*

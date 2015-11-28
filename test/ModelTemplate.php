@@ -17,7 +17,7 @@ echo '<p> Last Inserted ID: ' . $lastInsertedId . '</p>';
  * GET SINGLE TEST.
  */
 $truck2 = new ModelTemplate('Truck');
-$truck2 = $truck2->get_single($lastInsertedId);
+$truck2 = $truck2->get_single('id', $lastInsertedId);
 echo '<p> One element: ';
 var_dump($truck2);
 echo '</p>';
@@ -35,7 +35,7 @@ var_dump($trucks);
  */
 $truck4 = new ModelTemplate('Truck');
 echo '<p> Before update: ';
-var_dump($truck4 = $truck4->get_single($lastInsertedId));
+var_dump($truck4 = $truck4->get_single('id', $lastInsertedId));
 echo '</p>';
 
 $truck4->vehicle_capacity = 100;
@@ -44,12 +44,12 @@ $truck4->age = 10;
 $truck4->submit_changes();
 
 echo '<p> After update: ';
-var_dump($truck4->get_single($lastInsertedId));
+var_dump($truck4->get_single('id', $lastInsertedId));
 echo '</p>';
 
 /*
  * DELETE TEST.
  */
 $truck5 = new ModelTemplate('Truck');
-$truck5 = $truck5->get_single($lastInsertedId);
+$truck5 = $truck5->get_single('id', $lastInsertedId);
 echo '<p> Deleted rows: ' . $truck5->delete() . '</p>';

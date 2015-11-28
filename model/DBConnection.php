@@ -78,16 +78,16 @@ class DBConnection {
      * Certain columns can be selected, if they're specified in an array.
      */
 
-    public function select($table, $columns, $id = null) {
+    public function select($table, $columns, $where = null, $value = null) {
         $results = null;
         $query = $this->build_select_statement($table, $columns);
 
         $db = $this->get_db_connection();
         try {
             $stmt = null;
-            if ($id) {
-                $stmt = $db->prepare($query . ' WHERE id=:id');
-                $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            if ($where && $value) {
+                $stmt = $db->prepare($query . ' WHERE ' . $where . '=:' . $where);
+                $stmt->bindValue(':' . $where, $value);
                 $stmt->execute();
             } else {
                 $stmt = $db->query($query);

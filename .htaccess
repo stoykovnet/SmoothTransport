@@ -2,5 +2,5 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule api/v1/(.*)$ api/api-controller.php?request=$1 [QSA,NC,L]
+RewriteRule api/v1/(.*)$ api/API_Handler.php?request=$1 [QSA,NC,L]
 </IfModule>

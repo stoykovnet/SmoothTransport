@@ -6,7 +6,7 @@ if ($_SERVER['DOCUMENT_ROOT'] === 'C:/wamp/www/') {
     define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 }
 
-require_once constant('ROOT') . 'api/sms_api.php';
+require_once constant('ROOT') . 'api/SMS_API.php';
 
 // Requests from the same server don't have a HTTP_ORIGIN header
 if (!array_key_exists('HTTP_ORIGIN', $_SERVER)) {
@@ -14,7 +14,7 @@ if (!array_key_exists('HTTP_ORIGIN', $_SERVER)) {
 }
 
 try {
-    $api = new sms_api($_REQUEST['request'], $_SERVER['HTTP_ORIGIN']);
+    $api = new SMS_API($_REQUEST['request'], $_SERVER['HTTP_ORIGIN']);
     echo $api->route_request();
 } catch (Exception $ex) {
     echo json_encode(Array('error' => $ex->getMessage()));

@@ -42,6 +42,8 @@ class ModelTemplate {
         // SmsUser can be written also as SMSUser. Different preferences.
         if (strtolower($className) === 'smsuser') {
             $tableName = 'sms_user';
+        } elseif (strtolower($className) === 'sms') {
+            $tableName = 'sms';
         } else {
 
             $parts = preg_split('/(?=[A-Z])/', $className, -1, PREG_SPLIT_NO_EMPTY);
@@ -55,7 +57,6 @@ class ModelTemplate {
                 }
             }
         }
-
         return $tableName;
     }
 
@@ -155,10 +156,10 @@ class ModelTemplate {
      * @param int $id The id of the instance that you want to get.
      * @return ModelTemplate|null
      */
-    public function get_single($id) {
+    public function get_single($where, $value) {
         $db = new DBConnection();
         $data = $db->select($this->convert_to_table_name($this->get_class_name())
-                , '*', $id);
+                , '*', $where, $value);
 
         if ($data) {
             return $this->build_instance($data[0]);

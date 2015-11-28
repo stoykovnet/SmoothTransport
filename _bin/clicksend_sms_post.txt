@@ -1,29 +1,30 @@
-// From Truck Driver to Logistician.
-// FROM DATA
-sms=+4581589467
-from=+4581589467
-
+// [FROM DATA]
+// Truck Driver's telephone number.
+sms=%2b4581589467
+from=%2b4581589467
+// Truck Driver's message to Logistician.
 message=Truckdown
 body=Truckdown
 
-// Previous message sent by Logistician to Truck Driver.
+// Former message, that was sent from Logistician to Truck driver beforehand.
 originalmessage=Ahahashdasda
 original_body=Ahahashdasda
 originalmessageid=F23E0141-3878-44C5-BA0E-E76D33809BE6
 original_message_id=F23E0141-3878-44C5-BA0E-E76D33809BE6
-
-// TO DATA
 originalsenderid=%2b45609946244003
 
-// For some kind of sms template.
+// Some template texts that can be added to SMS-es.
 customstring=
 custom_string=
 
-// UNIX
-timestamp=1448495481
+// UNIX time.
+timestamp=1448665800
 
-to=45 6099 4624 4003
+// [TO DATA]
+// Logistician's telephone number.
+to=%2b45609946244003
 
+// Logistician's registration details on Clicksend.
 user_id=3066
 subaccount_id=3616
 username=stoykovnet
