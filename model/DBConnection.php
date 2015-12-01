@@ -19,13 +19,24 @@ class DBConnection {
     private function get_db_connection() {
         if ($this->dbConn === null) {
             try {
-                $host = 'localhost';
-                $db = 'smooth_transport';
-                $user = 'root';
+                $host = '';
+                $db = '';
+                $user = '';
                 $pass = '';
-                $set = 'utf8mb4_unicode_ci';
 
-                $this->dbConn = new PDO("mysql:host=$host;dbname=$db;charset=$set"
+                if (constant('ROOT') === 'C:/wamp/www/smoothTransport/') {
+                    $host = 'localhost';
+                    $db = 'smooth_transport';
+                    $user = 'root';
+                    $pass = '';
+                } else {
+                    $host = 'localhost';
+                    $db = 'cosyclim_smooth';
+                    $user = 'cosyclim_smooth';
+                    $pass = 'novagodina2016';
+                }
+
+                $this->dbConn = new PDO("mysql:host=$host;dbname=$db;"
                         , $user, $pass);
 
                 return $this->dbConn;
@@ -86,8 +97,7 @@ class DBConnection {
         try {
             $stmt = null;
             if ($where && $value) {
-                $stmt = $db->prepare($query . ' WHERE ' . $where . '=:' . $where);
-                $stmt->bindValue(':' . $where, $value);
+                $stmt = $this->build_select_with_where_clause($db, $query, $where, $value);
                 $stmt->execute();
             } else {
                 $stmt = $db->query($query);
@@ -101,6 +111,29 @@ class DBConnection {
         }
 
         return $results;
+    }
+
+    private function build_select_with_where_clause($db, $query, $where, $value) {
+        $stmt = null;
+        if (is_array($where) && is_array($value)) {
+            $clause = ' WHERE ';
+            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
+                $clause .= $where[$i] . '=:' . $where[$i];
+                if ($i < count($where) - 1 && $i < count($value) - 1) {
+                    $clause .= ' AND ';
+                }
+            }
+
+            $stmt = $db->prepare($query . $clause);
+            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
+                $stmt->bindValue(':' . $where[$i], $value[$i]);
+            }
+        } else {
+            $stmt = $db->prepare($query . ' WHERE ' . $where . '=:' . $where);
+            $stmt->bindValue(':' . $where, $value);
+        }
+
+        return $stmt;
     }
 
     /*

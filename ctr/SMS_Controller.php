@@ -10,9 +10,13 @@ class SMS_Controller {
         $sms->message = $smsData['message'];
         $sms->sender_id = $senderId;
         $sms->recipient_id = $recipientId;
-        $sms->clicksend_ts = $smsData['timestamp'];
+        $sms->clicksend_ts = gmdate('Y-m-d H:i:s', $smsData['timestamp']);
         
         return $sms->submit_new();
     }
 
+    public function get_unseen_SMS($userId = null) {
+        $sms = new ModelTemplate('SMS');
+        return $sms->get_all('is_seen', 'false');
+    }
 }

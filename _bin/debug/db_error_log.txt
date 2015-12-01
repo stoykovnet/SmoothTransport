@@ -1,3 +1,5 @@
+[2015-12-01 01:44:39]: SQLSTATE[28000] [1045] Access denied for user 'cosyclim_smooth'@'localhost' (using password: YES) @155 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
+[2015-12-01 01:44:39]: SQLSTATE[28000] [1045] Access denied for user 'cosyclim_smooth'@'localhost' (using password: YES) @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
 [2015-11-19 02:28:18]: SQLSTATE[08004] [1040] Too many connections @246 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
 [2015-11-19 02:28:18]: SQLSTATE[08004] [1040] Too many connections @12 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection
 [2015-11-19 02:23:26]: SQLSTATE[08004] [1040] Too many connections @246 in C:\wamp\www\smoothTransport\model\DBConnection.php get_db_connection

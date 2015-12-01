@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . 'smoothTransport/model/DBConnection.php';
+require_once constant('ROOT') . 'model/DBConnection.php';
 
 class ModelTemplate {
 
@@ -170,13 +170,22 @@ class ModelTemplate {
 
     /**
      * Get all elements from this type that are in the database. If there are no
-     * elements, this method will return NULL.
+     * elements, this method will return NULL. If where clause is specified, a set
+     * of elements will be returned or NULL.
+     * @param string $where Optional
+     * @param string $value Optional
      * @return array(ModelTemplate)|null
      */
-    public function get_all() {
+    public function get_all($where = null, $value = null) {
         $db = new DBConnection();
-        $data = $db->select($this->convert_to_table_name($this->get_class_name())
-                , '*');
+        $data = null;
+        if ($where && $value) {
+            $data = $db->select($this->convert_to_table_name($this->get_class_name())
+                    , '*', $where, $value);
+        } else {
+            $data = $db->select($this->convert_to_table_name($this->get_class_name())
+                    , '*');
+        }
 
         $list = array();
         if ($data) {
@@ -254,5 +263,8 @@ class ModelTemplate {
 
         return $instance;
     }
-
+    
+    public function get_all_fields() {
+        return $this->classFields;
+    }
 }
