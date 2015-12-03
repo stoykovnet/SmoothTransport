@@ -87,6 +87,12 @@ class ModelTemplate {
         }
     }
 
+    /**
+     * Show fatal error and halt application execution if a method tries to alter
+     * or retrieve a variable that does not belong to this class.
+     * @param string $method
+     * @param string $variable
+     */
     private function show_fatal_error($method, $variable) {
         $trace = debug_backtrace();
         trigger_error(
@@ -104,7 +110,8 @@ class ModelTemplate {
     }
 
     /**
-     * Dump information about this instance. The output is similar to var_dump function.
+     * Dump information about this instance. The output is similar to var_dump function,
+     * but it shows the name of the class, instead of object(ModelTemplate).
      */
     public function to_dump() {
         // Object's class name, the number of the instance from this class.
@@ -151,9 +158,12 @@ class ModelTemplate {
     }
 
     /**
-     * Get a single element from this type specified by ID. If there is no element
-     * with such ID, the method will return NULL.
+     * Get a single element from this type specified by criteria of your choice.
+     * If there is no element with such criteria, the method will return NULL.
+     * More than one criteria can be used to get an element.
      * @param int $id The id of the instance that you want to get.
+     * @param string|array(string) $where
+     * @param string|array(string) $value
      * @return ModelTemplate|null
      */
     public function get_single($where, $value) {
@@ -172,8 +182,8 @@ class ModelTemplate {
      * Get all elements from this type that are in the database. If there are no
      * elements, this method will return NULL. If where clause is specified, a set
      * of elements will be returned or NULL.
-     * @param string $where Optional
-     * @param string $value Optional
+     * @param string|array(string) $where Optional
+     * @param string|array(string) $value Optional
      * @return array(ModelTemplate)|null
      */
     public function get_all($where = null, $value = null) {
@@ -198,6 +208,12 @@ class ModelTemplate {
         }
     }
 
+    /**
+     * Insert selected instance of this type in the database. The instance will 
+     * not be inserted if it does not contain any data.
+     * Returns the ID of the inserted instance on success.
+     * @return int|null
+     */
     public function submit_new() {
         $db = new DBConnection();
 
@@ -216,6 +232,12 @@ class ModelTemplate {
         }
     }
 
+    /**
+     * Update selected instance data of this type in the database. The instance
+     * data will not be changed, in case it remains with no data.
+     * Returns the number of affected rows on success.
+     * @return int|null
+     */
     public function submit_changes() {
         if ($this->id) {
             $db = new DBConnection();
@@ -238,6 +260,11 @@ class ModelTemplate {
         }
     }
 
+    /**
+     * Delete selected instance of this type in the database.
+     * Returns the number of affected rows on success. 
+     * @return int|null
+     */
     public function delete() {
         if ($this->id) {
             $db = new DBConnection();
@@ -250,7 +277,29 @@ class ModelTemplate {
     }
 
     /**
-     * Fill model class instance with data fetched from the database.
+     * Count how many instances of this type reside in the database. If WHERE
+     * condition is provided, only instances that correspond with the condition
+     * will be counted.
+     * @param string|array(string) $where Optional.
+     * @param string|array(string) $value Optional.
+     * @return int
+     */
+    public function count($where = null, $value = null) {
+        $db = new DBConnection();
+        $data = null;
+        if ($where && $value) {
+            $data = $db->select($this->convert_to_table_name($this->get_class_name())
+                    , 'COUNT(id)', $where, $value);
+        } else {
+            $data = $db->select($this->convert_to_table_name($this->get_class_name())
+                    , 'COUNT(id)');
+        }
+
+        return intval($data[0]['COUNT(id)']);
+    }
+
+    /**
+     * Fill model class instance with data that is fetched from the database.
      * @param array $data
      * @return ModelTemplate
      */
@@ -263,8 +312,22 @@ class ModelTemplate {
 
         return $instance;
     }
-    
+
+    /**
+     * Retrieve all fields of this instance in array.
+     * @return array
+     */
     public function get_all_fields() {
         return $this->classFields;
     }
+
+    /**
+     * Add new property to this class.
+     * @param string $variable
+     * @param mixed $value
+     */
+    public function add_field($variable, $value) {
+        $this->classFields[$variable] = $value;
+    }
+
 }

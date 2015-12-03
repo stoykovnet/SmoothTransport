@@ -4,7 +4,7 @@ class DBConnection {
 
     private $dbConn = null; // To store PDO instance.
 
-    /*
+    /**
      * Initializes PDO instance immediately.
      */
 
@@ -12,10 +12,10 @@ class DBConnection {
         $this->get_db_connection();
     }
 
-    /*
-     * Create a new PDO instance or retrieve it, if it has already been created.
+    /**
+     * Create a new PDO instance or retrieve it, if it has already been created. 
+     * @return PDO
      */
-
     private function get_db_connection() {
         if ($this->dbConn === null) {
             try {
@@ -24,12 +24,15 @@ class DBConnection {
                 $user = '';
                 $pass = '';
 
+                // localhost/ MySQL connection data.
                 if (constant('ROOT') === 'C:/wamp/www/smoothTransport/') {
                     $host = 'localhost';
                     $db = 'smooth_transport';
                     $user = 'root';
                     $pass = '';
-                } else {
+                }
+                // smooth-transport.info/ MySQL connection data.
+                else {
                     $host = 'localhost';
                     $db = 'cosyclim_smooth';
                     $user = 'cosyclim_smooth';
@@ -49,10 +52,14 @@ class DBConnection {
     }
 
     /*
-     * Save a log entry, in case of database-related problems.
-     * The log entries can be found in debug folder.
+     * 
      */
 
+    /**
+     * Save a log entry, in case of database-related problems.
+     * The log entries can be found in debug folder. 
+     * @param string $entry you wish to save.
+     */
     private function write_to_log($entry) {
         $logPath = '../_bin/debug/db_error_log.txt';
         $dbg = debug_backtrace();
@@ -75,20 +82,25 @@ class DBConnection {
         }
     }
 
-    /*
+    /**
      * Get the prefix that is used before all tables.
+     * @return string
      */
-
     private function get_table_prefix() {
         return 'ccst16_';
     }
 
-    /*
+    /**
      * Get a single row by id or get all rows from a specified table.
      * All columns can be selected by '*'.
      * Certain columns can be selected, if they're specified in an array.
+     * There can be more than one WHERE condition.
+     * @param string $table
+     * @param string|array(string) $columns
+     * @param string|array(string) $where
+     * @param string|array(string) $value
+     * @return array
      */
-
     public function select($table, $columns, $where = null, $value = null) {
         $results = null;
         $query = $this->build_select_statement($table, $columns);
@@ -97,7 +109,7 @@ class DBConnection {
         try {
             $stmt = null;
             if ($where && $value) {
-                $stmt = $this->build_select_with_where_clause($db, $query, $where, $value);
+                $stmt = $this->add_where_clause($db, $query, $where, $value);
                 $stmt->execute();
             } else {
                 $stmt = $db->query($query);
@@ -113,33 +125,12 @@ class DBConnection {
         return $results;
     }
 
-    private function build_select_with_where_clause($db, $query, $where, $value) {
-        $stmt = null;
-        if (is_array($where) && is_array($value)) {
-            $clause = ' WHERE ';
-            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
-                $clause .= $where[$i] . '=:' . $where[$i];
-                if ($i < count($where) - 1 && $i < count($value) - 1) {
-                    $clause .= ' AND ';
-                }
-            }
-
-            $stmt = $db->prepare($query . $clause);
-            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
-                $stmt->bindValue(':' . $where[$i], $value[$i]);
-            }
-        } else {
-            $stmt = $db->prepare($query . ' WHERE ' . $where . '=:' . $where);
-            $stmt->bindValue(':' . $where, $value);
-        }
-
-        return $stmt;
-    }
-
-    /*
-     * Get a select query for any given table and any given number of columns.
+    /**
+     * Get a select query for any given table and any given number of columns. 
+     * @param string $table
+     * @param string|array(string) $columns
+     * @return string
      */
-
     private function build_select_statement($table, $columns) {
         $query = 'SELECT ';
 
@@ -157,11 +148,51 @@ class DBConnection {
         return $query .= ' FROM ' . $this->get_table_prefix() . $table;
     }
 
+    /**
+     * Add a WHERE clause to a select statement. There can be more than 
+     * one WHERE condition.
+     * @param PDO $db
+     * @param string $query
+     * @param string|array(string) $where
+     * @param string|array(string) $value
+     * @return PDOStatement
+     */
+    private function add_where_clause($db, $query, $where, $value) {
+        $stmt = null;
+        // Multiple conditions.
+        if (is_array($where) && is_array($value)) {
+            $clause = ' WHERE ';
+            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
+                $clause .= $where[$i] . '=:' . $where[$i];
+                if ($i < count($where) - 1 && $i < count($value) - 1) {
+                    $clause .= ' AND ';
+                }
+            }
+
+            $stmt = $db->prepare($query . $clause);
+            for ($i = 0; $i < count($where) && $i < count($value); $i++) {
+                $stmt->bindValue(':' . $where[$i], $value[$i]);
+            }
+        }
+        // Single condtion.
+        else {
+            $stmt = $db->prepare($query . ' WHERE ' . $where . '=:' . $where);
+            $stmt->bindValue(':' . $where, $value);
+        }
+
+        return $stmt;
+    }
+
     /*
-     * Insert data in any given table into specified columns by an array.
-     * Use array('columnName' => 'value') to specify the columns' values.
      */
 
+    /**
+     * Insert data in any given table into specified columns by an array.
+     * Use array('columnName' => 'value') to specify the columns' values.
+     * @param string $table
+     * @param array(string) $data
+     * @return int|null
+     */
     public function insert($table, $data) {
         $db = $this->get_db_connection();
         try {
@@ -182,10 +213,12 @@ class DBConnection {
         }
     }
 
-    /*
+    /**
      * Get an insert query for any given table and any given number of columns.
+     * @param string $table
+     * @param array(string) $data
+     * @return string
      */
-
     private function build_insert_statement($table, $data) {
         $columns = ' (';
         $values = ' VALUES(';
@@ -210,11 +243,14 @@ class DBConnection {
         return 'INSERT INTO ' . $this->get_table_prefix() . $table . $columns . $values;
     }
 
-    /*
+    /**
      * Update a set of columns in any given table specified by id.
      * Use array('columnName' => 'value') to specify the new columns' values.
+     * @param string $table
+     * @param array(string) $data
+     * @param int|string $id
+     * @return int|boolean
      */
-
     public function update($table, $data, $id) {
         $db = $this->get_db_connection();
         try {
@@ -236,10 +272,12 @@ class DBConnection {
         }
     }
 
-    /*
+    /**
      * Get an update query for any given table and any given number of columns.
+     * @param string $table
+     * @param array(string) $data
+     * @return string
      */
-
     private function build_update_statement($table, $data) {
         $set = ' SET ';
 
@@ -258,10 +296,12 @@ class DBConnection {
         return 'UPDATE ' . $this->get_table_prefix() . $table . $set . ' WHERE id=:id';
     }
 
-    /*
+    /**
      * Delete a row by id in a specified table.
+     * @param string $table
+     * @param int|string $id
+     * @return int|boolean
      */
-
     public function delete($table, $id) {
         $db = $this->get_db_connection();
         try {
@@ -274,7 +314,12 @@ class DBConnection {
             return false;
         }
     }
-
+    
+    /**
+     * Retrieve the names of all columns that belong to the specified table.
+     * @param string $table
+     * @return array(string)|boolean
+     */
     public function get_table_columns_names($table) {
         $db = $this->get_db_connection();
         try {

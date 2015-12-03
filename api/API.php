@@ -22,15 +22,15 @@ abstract class API {
     protected $verb = '';
 
     /**
-     * Optional. To pass parameters to the endpoint, which will alter the standard
-     * response. For instance, to get single entity by ID and set response format
+     * Optional. To pass parameters to the endpoint.
+     * For instance, one can to get single entity by ID or set the response format
      * to JSON or XML.
      * @var array
      */
     protected $arguments = array();
 
     /**
-     * To store the input of a POST or PUT request.
+     * To store the input data of a POST or PUT request.
      * @var mixed
      */
     protected $file = null;
@@ -73,7 +73,7 @@ abstract class API {
     /**
      * Parse a request URI to get the requested endpoint and the arguments for 
      * that endpoint. If there's a verb it will be retrieved as well.
-     * Request URI may look like: api/v1/[endpoint]/[|verb]/[argument1]/[argument2]
+     * Request URI may look like: api/v1/{endpoint}/{|verb}/{argument1}/{argument2}
      * @param string $uri to be parsed.
      */
     private function parse_request_uri($uri) {
@@ -81,7 +81,7 @@ abstract class API {
 
         $this->endpoint = array_shift($this->arguments);
 
-        // The verb is unindexed argument, but is not numeric like an element ID.
+        // The verb is not numeric like an element ID.
         if (array_key_exists(0, $this->arguments) &&
                 !is_numeric($this->arguments[0])) {
             $this->verb = array_shift($this->arguments);
@@ -114,7 +114,7 @@ abstract class API {
     }
 
     /**
-     * Call the method that is responsible for handling the endpoint request.
+     * Call the method that is responsible for handling the requested endpoint.
      * @return mixed
      */
     public function route_request() {
@@ -174,8 +174,11 @@ abstract class API {
         return ($status[$code]) ? $status[$code] : $status[500];
     }
 
-    
-    protected function log_received_data() {
+    /**
+     * Save HTTP request log. The log includes what data is received from outside,
+     * who is the requester, access date and time, what method is used.
+     */
+    protected function log_request() {
         $log = '';
         $logPath = '../_bin/debug/api_requests_log.txt';
         if (file_exists($logPath)) {

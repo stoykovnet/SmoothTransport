@@ -1,0 +1,135 @@
+.dashboard-header {
+    margin: 0 auto;
+    padding: 0px 15px;
+
+    border-bottom: 1px solid #ddd;
+
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+
+.dashboard-header h1, .dashboard-navigation {
+    float: left;
+}
+.dashboard-header h1 { color: #444; }
+.dashboard-navigation ul { margin: 0; }
+
+.dashboard-navigation li {
+    float: left;
+    list-style: none;
+}
+
+.dashboard-navigation li a {
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+    width: 150px;
+    padding: 15px;
+    color: #444;
+    font-weight: 700;
+    text-align: center;
+    border-left: solid 1px #ddd;
+}
+
+.dashboard-navigation li a:hover {
+    background-color: #fb5;
+    border: none;
+    color: #fff;
+}
+
+.hello-wrapper {
+    display: inline-block;
+    padding: 5px 15px;
+    margin: 5px 0;
+
+    border: 1px solid #ddd;
+    border-left: none;
+
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+
+    font-size: 10pt;
+}
+
+.unseen-counter {
+    display: none;
+}
+
+.dashboard-contents {
+    box-sizing: border-box;
+    margin: auto;
+    padding: 15px 0;
+    max-width: 855px;
+
+    border-bottom: 1px solid #ddd;
+
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+
+.sms {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    background-color: #fcfcfc;
+    border-top: solid 1px #fff;
+}
+.unseen.sms { background-color: #f9f9f9; }
+
+.sms-column ul { margin: 0; padding: 0; }
+.sms-column ul li { list-style: none; }
+.sms-column {
+    width: 315px;
+    margin: 0 5px;
+    float: left;
+}
+.sms-column.last { width: 148px; }
+
+.sms-meta-data {
+    font-size: 10pt;
+    color: #666;
+}
+.sms-meta-data a { color: #444; }
+.sms-meta-data a span {
+    background-image: url('../img/contact_small.png');
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.sms-control-link {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: #fff;
+    display: block;
+    float: left;
+    border: solid 1px #ddd;
+    margin: 5px;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+
+.sms-control-link:hover {
+    background-color: #fb5;
+    border: none;
+}
+
+.sms-control-link img {
+    width: 32px;
+    margin: 25%;
+}
+
+
+.img-normal, .sms-control-link:hover .img-hover {
+    display: block;
+}
+
+.img-hover, .sms-control-link:hover .img-normal {
+    display: none;
+}
