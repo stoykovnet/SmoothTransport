@@ -9,7 +9,7 @@ body {
 
 h1, h2 { text-align: center; margin: 0; }
 
-.contents {
+.login {
     display:none;
 
     width: 300px;
@@ -25,13 +25,13 @@ h1, h2 { text-align: center; margin: 0; }
     box-shadow: 0 1px 3px rgba(0,0,0,.13);
 }
 
-.contents hr {
+.login hr {
     margin: 15px 0;
     border: none;
     border-bottom: 1px solid #ddd;
 }
 
-.auth-fail-message {
+.fail-message {
     width: 100%;
     display: none;
 
