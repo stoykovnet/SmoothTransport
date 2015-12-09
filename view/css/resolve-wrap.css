@@ -1,0 +1,66 @@
+.driver-truck-data {padding: 0 15px; }
+.resolve-wrap h3 { padding: 0 15px; }
+.driver-truck-data ul { margin: 0; padding: 0; }
+.driver-truck-data ul li { list-style: none; }
+
+.tile {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+    border-top: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+    clear: both;
+}
+
+.tile:hover {
+    background-color: #fb5;
+    color: #fff;
+}
+
+.tile:active { background-color: #d93; }
+.service-station-column ul {margin: 0; padding: 0;}
+.service-station-column ul li { list-style: none;}
+
+.service-station-column {
+    float: left;
+    width: 49%;
+    margin: 0.25%;
+}
+
+.control-link {
+    display: block;
+    width: 100px;
+    box-sizing: border-box;
+    padding: 5px;
+    height: 35px;
+    margin: 15px auto 0px;
+
+    border-radius: 15px;
+    background-color: #fb5;
+
+    text-decoration: none;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+
+    transition-duration: 0.3s;
+}
+
+.control-link:hover {
+    border-bottom: 3px solid #d93;
+
+    line-height: 18px;
+}
+
+.control-link:active {    
+    background-color: #d93;
+
+    border-bottom: 0px;
+    border-top: 3px solid #fb5;
+
+    line-height: 25px;
+    color: #ddd;    
+
+    transition-duration: 0.1s;
+}

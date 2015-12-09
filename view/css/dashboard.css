@@ -38,6 +38,10 @@
     color: #fff;
 }
 
+.dashboard-navigation li a:active {
+    background-color: #d93;
+}
+
 .greeting-wrapper {
     display: inline-block;
     padding: 5px 15px;
@@ -68,16 +72,28 @@
     background-color: #fff;
     background-clip: padding-box;
     box-shadow: 0 1px 3px rgba(0,0,0,.13);
+    clear: both;
 }
 
 .sms {
     width: 100%;
     box-sizing: border-box;
-    padding: 5px 20px;
-    background-color: #fcfcfc;
-    border-top: solid 1px #fff;
+    padding: 5px 10px;
+    background-color: #fff;
+    border-top: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+    clear: both;
 }
-.unseen.sms { background-color: #f9f9f9; }
+.unseen.sms { 
+    background-color: #f7f7f7; 
+}
+
+.is-seen-img {
+    float: left;
+    width: 16px;
+    display: block;
+    margin-top: 3px;
+}
 
 .sms-column ul { margin: 0; padding: 0; }
 .sms-column ul li { list-style: none; }
@@ -120,16 +136,22 @@
     border: none;
 }
 
+.sms-control-link:active {
+    background-color: #d93;
+}
+
 .sms-control-link img {
     width: 32px;
     margin: 25%;
 }
 
 
-.img-normal, .sms-control-link:hover .img-hover {
+.img-normal, .sms-control-link:hover .img-hover,
+.sms-control-link:active .img-hover {
     display: block;
 }
 
-.img-hover, .sms-control-link:hover .img-normal {
+.img-hover, .sms-control-link:hover .img-normal,
+.sms-control-link:active .img-normal {
     display: none;
 }

@@ -1,0 +1,56 @@
+.confirm-message-wrap h3 {
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+}
+
+.message-to-send {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+    border-top: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+    clear: both;
+}
+
+.control-links {
+    padding: 0 15px;
+}
+
+.control-links a {
+    display: block;
+    box-sizing: border-box;
+    width: 100px;
+    margin: 10px;
+    float: left;
+    padding: 5px;
+    height: 35px;
+
+    border-radius: 15px;
+    background-color: #fb5;
+
+    text-decoration: none;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+
+    transition-duration: 0.3s;
+}
+
+.control-links a:hover {
+    border-bottom: 3px solid #d93;
+
+    line-height: 18px;
+}
+
+.control-links a:active {
+    background-color: #d93;
+
+    border-bottom: 0px;
+    border-top: 3px solid #fb5;
+
+    line-height: 25px;
+    color: #ddd;    
+
+    transition-duration: 0.1s;
+}

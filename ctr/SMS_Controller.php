@@ -15,9 +15,10 @@ class SMS_Controller {
      */
     public function count_all_recipient_SMSs($recipientId, $unseen = false) {
         $sms = new ModelTemplate('SMS');
-        
+
         if ($unseen) {
-            return $sms->count(array('recipient_id', 'is_seen'), array($recipientId, 'false'));
+            return $sms->count(array('recipient_id', 'is_seen', 'is_resolved')
+                            , array($recipientId, 'false', 'false'));
         } else {
             return $sms->count('recipient_id', $recipientId);
         }
@@ -35,9 +36,11 @@ class SMS_Controller {
         $SMSs = null;
 
         if ($unseen) {
-            $SMSs = $SMS->get_all(array('recipient_id', 'is_seen'), array($recipientId, 'false'));
+            $SMSs = $SMS->get_all(array('recipient_id', 'is_seen', 'is_resolved')
+                    , array($recipientId, 'false', 'false'));
         } else {
-            $SMSs = $SMS->get_all('recipient_id', $recipientId);
+            $SMSs = $SMS->get_all(array('recipient_id', 'is_resolved')
+                    , array($recipientId, 'false'));
         }
 
         if ($SMSs) {
@@ -61,7 +64,6 @@ class SMS_Controller {
         return $SMSs;
     }
 
-
     /**
      * Save an SMS.
      * @param int|string $senderId
@@ -78,6 +80,17 @@ class SMS_Controller {
         $sms->clicksend_ts = gmdate('Y-m-d H:i:s', $smsData['timestamp']);
 
         return $sms->submit_new();
+    }
+
+    public function update_SMS($id, $smsData) {
+        $sms = new ModelTemplate('SMS');
+
+        $sms->id = $id;
+        $sms->message = $smsData['message'];
+        $sms->is_seen = $smsData['is_seen'];
+        $sms->is_resolved = $smsData['is_resolved'];
+
+        return $sms->submit_changes();
     }
 
 }

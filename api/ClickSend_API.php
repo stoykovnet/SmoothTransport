@@ -22,7 +22,7 @@ class ClickSend_API {
      * @param string $message
      * @return string
      */
-    private function send_SMS($senderId, $recipientId, $recipientTelephoneNumber, $message) {
+    public function send_SMS($senderId, $recipientId, $recipientTelephoneNumber, $message) {
         $recipientTelephoneNumber = '+61411111111'; // Testing telephone number.
 
         $cSMS = curl_init('https://api.clicksend.com/rest/v2/send.json');
@@ -46,7 +46,6 @@ class ClickSend_API {
             $sctr->save_SMS($senderId, $recipientId
                     , array('message' => $message, 'timestamp' => time()));
         }
-
         return $response->recipientcount;
     }
 
